@@ -5,3 +5,10 @@ variable "env" {
 variable "region" {
   default = "ap-northeast-1"
 }
+
+#--------------------------------------------------------------
+# Glue Variables
+#--------------------------------------------------------------
+variable "glue_crawler_user_database_crawler_schedule" {
+  default = "cron(30 21 * * ? *)"
+}
