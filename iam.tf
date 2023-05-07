@@ -23,7 +23,7 @@ data "aws_iam_policy_document" "read_s3_user" {
     effect = "Allow"
 
     actions = [
-        "s3:ListBucket",
+      "s3:ListBucket",
     ]
 
     resources = [
