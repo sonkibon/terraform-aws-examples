@@ -5,7 +5,7 @@ resource "aws_iam_user" "read_s3_user" {
     Name        = "read-s3-user"
     Environment = var.env
     Application = "IAMUser"
-    Owner       = "Son"
+    Owner       = var.owner_tag
     ManagedBy   = "Terraform"
   }
 }

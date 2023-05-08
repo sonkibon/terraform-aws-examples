@@ -6,6 +6,10 @@ variable "region" {
   default = "ap-northeast-1"
 }
 
+variable "owner_tag" {
+  default = "Son"
+}
+
 #--------------------------------------------------------------
 # Glue Variables
 #--------------------------------------------------------------

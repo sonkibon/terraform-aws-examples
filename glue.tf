@@ -26,7 +26,7 @@ resource "aws_glue_crawler" "user_database_crawler" {
     Name        = "user-database-crawler"
     Environment = var.env
     Application = "GlueCrawler"
-    Owner       = "Son"
+    Owner       = var.owner_tag
     ManagedBy   = "Terraform"
   }
 }
