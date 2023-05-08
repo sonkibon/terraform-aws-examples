@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "user" {
     Name        = "user"
     Environment = var.env
     Application = "S3Bucket"
-    Owner       = "Son"
+    Owner       = var.owner_tag
     ManagedBy   = "Terraform"
   }
 }
