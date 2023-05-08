@@ -17,7 +17,7 @@ variable "glue_crawler_user_database_crawler_schedule" {
   default = "cron(30 21 * * ? *)"
 }
 
-variable "glue_trigger_export_member_age_gender_segment_to_s3_schedule" {
+variable "glue_trigger_export_processed_age_data_to_s3_schedule" {
   default = "cron(0 22 * * ? *)"
 }
 

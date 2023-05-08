@@ -155,3 +155,123 @@ resource "aws_glue_job" "notify_workflow_status" {
     ManagedBy   = "Terraform"
   }
 }
+
+resource "aws_glue_workflow" "user" {
+  name        = "user"
+  description = "Execute ETL jos against user data"
+
+  tags = {
+    Name        = "user"
+    Environment = var.env
+    Application = "GlueWorkflow"
+    Owner       = var.owner_tag
+    ManagedBy   = "Terraform"
+  }
+}
+
+resource "aws_glue_trigger" "export_processed_age_data_to_s3" {
+  name          = "export-processed-age-data-to-s3"
+  description   = "Triggers a job to process user age data and upload to s3 based on a schedule"
+  schedule      = var.glue_trigger_export_processed_age_data_to_s3_schedule
+  type          = "SCHEDULED"
+  workflow_name = aws_glue_workflow.user.name
+
+  actions {
+    job_name = aws_glue_job.export_processed_age_data_to_s3.name
+  }
+
+  tags = {
+    Name        = "export-processed-age-data-to-s3"
+    Environment = var.env
+    Application = "GlueTrigger"
+    Owner       = var.owner_tag
+    ManagedBy   = "Terraform"
+  }
+}
+
+resource "aws_glue_trigger" "export_processed_gender_data_to_s3" {
+  name          = "export-processed-gender-data-to-s3"
+  description   = "Triggers a job to process user gender data and upload to s3 based on status of the previous job"
+  type          = "CONDITIONAL"
+  workflow_name = aws_glue_workflow.user.name
+
+  actions {
+    job_name = aws_glue_job.export_processed_gender_data_to_s3.name
+  }
+
+  predicate {
+    conditions {
+      job_name = aws_glue_job.export_processed_age_data_to_s3.name
+      state    = "SUCCEEDED"
+    }
+  }
+
+  tags = {
+    Name        = "export-processed-gender-data-to-s3"
+    Environment = var.env
+    Application = "GlueTrigger"
+    Owner       = var.owner_tag
+    ManagedBy   = "Terraform"
+  }
+}
+
+resource "aws_glue_trigger" "export_processed_interests_data_to_s3" {
+  name          = "export-processed-interests-data-to-s3"
+  description   = "Triggers a job to process user interests data and upload to s3 based on status of the previous job"
+  type          = "CONDITIONAL"
+  workflow_name = aws_glue_workflow.user.name
+
+  actions {
+    job_name = aws_glue_job.export_processed_interests_data_to_s3.name
+  }
+
+  predicate {
+    conditions {
+      job_name = aws_glue_job.export_processed_gender_data_to_s3.name
+      state    = "SUCCEEDED"
+    }
+  }
+
+  tags = {
+    Name        = "export-processed-interests-data-to-s3"
+    Environment = var.env
+    Application = "GlueTrigger"
+    Owner       = var.owner_tag
+    ManagedBy   = "Terraform"
+  }
+}
+
+resource "aws_glue_trigger" "notify_workflow_status" {
+  name          = "notify-workflow-status"
+  description   = "Triggers a notification job when one of the workflow jobs fails"
+  type          = "CONDITIONAL"
+  workflow_name = aws_glue_workflow.user.name
+
+  actions {
+    job_name = aws_glue_job.notify_workflow_status.name
+  }
+
+  predicate {
+    logical = "ANY"
+    conditions {
+      job_name = aws_glue_job.export_processed_age_data_to_s3.name
+      state    = "FAILED"
+    }
+    conditions {
+      job_name = aws_glue_job.export_processed_gender_data_to_s3.name
+      state    = "FAILED"
+    }
+    conditions {
+      job_name = aws_glue_job.export_processed_interests_data_to_s3.name
+      state    = "FAILED"
+    }
+  }
+
+  tags = {
+    Name        = "notify-workflow-status"
+    Environment = var.env
+    Application = "GlueTrigger"
+    Owner       = var.owner_tag
+    ManagedBy   = "Terraform"
+  }
+}
