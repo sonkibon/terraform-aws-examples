@@ -27,7 +27,7 @@ resource "aws_glue_crawler" "user_database_crawler" {
     Environment = var.env
     Application = "GlueCrawler"
     Owner       = var.owner_tag
-    ManagedBy   = "Terraform"
+    ManagedBy   = var.managed_by_tag
   }
 }
 
@@ -57,7 +57,7 @@ resource "aws_glue_job" "export_processed_age_data_to_s3" {
     Environment = var.env
     Application = "GlueJob"
     Owner       = var.owner_tag
-    ManagedBy   = "Terraform"
+    ManagedBy   = var.managed_by_tag
   }
 }
 
@@ -87,7 +87,7 @@ resource "aws_glue_job" "export_processed_gender_data_to_s3" {
     Environment = var.env
     Application = "GlueJob"
     Owner       = var.owner_tag
-    ManagedBy   = "Terraform"
+    ManagedBy   = var.managed_by_tag
   }
 }
 
@@ -121,7 +121,7 @@ resource "aws_glue_job" "export_processed_interests_data_to_s3" {
     Environment = var.env
     Application = "GlueJob"
     Owner       = var.owner_tag
-    ManagedBy   = "Terraform"
+    ManagedBy   = var.managed_by_tag
   }
 }
 
@@ -152,7 +152,7 @@ resource "aws_glue_job" "notify_workflow_status" {
     Environment = var.env
     Application = "GlueJob"
     Owner       = var.owner_tag
-    ManagedBy   = "Terraform"
+    ManagedBy   = var.managed_by_tag
   }
 }
 
@@ -165,7 +165,7 @@ resource "aws_glue_workflow" "user" {
     Environment = var.env
     Application = "GlueWorkflow"
     Owner       = var.owner_tag
-    ManagedBy   = "Terraform"
+    ManagedBy   = var.managed_by_tag
   }
 }
 
@@ -185,7 +185,7 @@ resource "aws_glue_trigger" "export_processed_age_data_to_s3" {
     Environment = var.env
     Application = "GlueTrigger"
     Owner       = var.owner_tag
-    ManagedBy   = "Terraform"
+    ManagedBy   = var.managed_by_tag
   }
 }
 
@@ -211,7 +211,7 @@ resource "aws_glue_trigger" "export_processed_gender_data_to_s3" {
     Environment = var.env
     Application = "GlueTrigger"
     Owner       = var.owner_tag
-    ManagedBy   = "Terraform"
+    ManagedBy   = var.managed_by_tag
   }
 }
 
@@ -237,7 +237,7 @@ resource "aws_glue_trigger" "export_processed_interests_data_to_s3" {
     Environment = var.env
     Application = "GlueTrigger"
     Owner       = var.owner_tag
-    ManagedBy   = "Terraform"
+    ManagedBy   = var.managed_by_tag
   }
 }
 
@@ -272,6 +272,6 @@ resource "aws_glue_trigger" "notify_workflow_status" {
     Environment = var.env
     Application = "GlueTrigger"
     Owner       = var.owner_tag
-    ManagedBy   = "Terraform"
+    ManagedBy   = var.managed_by_tag
   }
 }
