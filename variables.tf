@@ -10,6 +10,10 @@ variable "owner_tag" {
   default = "Son"
 }
 
+variable "managed_by_tag" {
+  default = "Terraform"
+}
+
 #--------------------------------------------------------------
 # Glue Variables
 #--------------------------------------------------------------
