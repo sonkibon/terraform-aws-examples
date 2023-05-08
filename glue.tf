@@ -155,3 +155,16 @@ resource "aws_glue_job" "notify_workflow_status" {
     ManagedBy   = "Terraform"
   }
 }
+
+resource "aws_glue_workflow" "user" {
+  name        = "user"
+  description = "Execute ETL jos against user data"
+
+  tags = {
+    Name        = "user"
+    Environment = var.env
+    Application = "GlueWorkflow"
+    Owner       = var.owner_tag
+    ManagedBy   = "Terraform"
+  }
+}
