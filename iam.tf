@@ -112,8 +112,8 @@ data "aws_iam_policy_document" "glue" {
 }
 
 resource "aws_iam_policy" "glue" {
-  name        = "${terraform.workspace}-${var.role}-glue-policy"
-  description = "Policies for AWS Glue crawler and job access to resources"
+  name        = "glue"
+  description = "Policy for AWS Glue crawler and job access to resources"
   policy      = data.aws_iam_policy_document.glue.json
 }
 
